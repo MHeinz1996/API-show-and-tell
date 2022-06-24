@@ -16,12 +16,16 @@ def index(request):
 
 def colorizer(request):
     
-    # img_url = request.GET.get('url')    
+    if request.GET.get('img'):
+        img_url = request.GET.get('img')
+    else:
+        # Generates a random pokemon if they input an invalid ID
+        img_url = 'https://images.unsplash.com/photo-1564566800380-aa5a49acb065?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80'   
     
     response = HTTP_Client.post(
         "https://api.deepai.org/api/colorizer",
          data={
-        'image': 'https://images.unsplash.com/photo-1564566800380-aa5a49acb065?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80'
+        'image': img_url
         },
         headers={'api-key': os.environ['api-key']}
     )
