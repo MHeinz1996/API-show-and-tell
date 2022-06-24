@@ -30,10 +30,17 @@ def colorizer(request):
     return render(request, 'show_and_tell/colorized.html', {'output': output})
 
 def text_to_img(request):
+
+    if request.GET.get('text'):
+        word = request.GET.get('text')
+    else:
+        # Generates a random pokemon if they input an invalid ID
+        word = 'dog'
+    
     response = HTTP_Client.post(
         "https://api.deepai.org/api/text2img",
         data={
-            'text': 'dog',
+            'text': word,
         },
         headers={'api-key': os.environ['api-key']}
     )
